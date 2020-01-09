@@ -1,0 +1,3 @@
+cl\prueba\information\entity\EntityTest.class
+cl\prueba\information\service\impl\InformatioServiceImplTest.class
+cl\prueba\information\controller\InformationControllerTest.class

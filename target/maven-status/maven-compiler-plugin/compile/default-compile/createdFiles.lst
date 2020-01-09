@@ -1,0 +1,12 @@
+cl\prueba\information\service\InformationService.class
+cl\prueba\information\entity\Forecast.class
+cl\prueba\information\InformationApplication.class
+cl\prueba\information\entity\Interesting.class
+cl\prueba\information\entity\Data.class
+cl\prueba\information\entity\Report.class
+cl\prueba\information\entity\Url.class
+cl\prueba\information\entity\Location.class
+cl\prueba\information\exception\InformationException.class
+cl\prueba\information\controller\InformationController.class
+cl\prueba\information\entity\Var.class
+cl\prueba\information\service\impl\InformatioServiceImpl.class
