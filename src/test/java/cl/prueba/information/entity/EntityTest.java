@@ -10,12 +10,7 @@ public class EntityTest {
 		Report report = new Report();
 		
 		Location location = new Location();
-		location.setCity("Santiago de Chile [Región Metropolitana de Santiago;Chile]");
-		
-		Interesting interesting = new Interesting();
-		interesting.setUrl("https://www.meteored.cl/tiempo-en_Santiago+de+Chile-America+Sur-Chile-Region+Metropolitana+de+Santiago-SCEL-1-18578.html");
-		location.setInteresting(interesting);
-		
+		location.setCity("Santiago de Chile [Región Metropolitana de Santiago;Chile]");				
 		List<Var> listVar = new ArrayList<Var>();
 		Var var = new Var();
 		Data data = new Data();

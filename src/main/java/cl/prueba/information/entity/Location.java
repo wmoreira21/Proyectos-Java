@@ -9,18 +9,16 @@ public class Location {
 
 	private String city;
 	private List<Var> var;
-	private Interesting interesting;
 	
 	public Location() {
 		super();
 	}
 	
 	
-	public Location(String city, List<Var> var, Interesting interesting) {
+	public Location(String city, List<Var> var) {
 		super();
 		this.city = city;
 		this.var = var;
-		this.interesting = interesting;
 	}
 
 	@XmlAttribute
@@ -41,14 +39,5 @@ public class Location {
 	public void setVar(List<Var> var) {
 		this.var = var;
 	}
-
-	@XmlElement
-	public Interesting getInteresting() {
-		return interesting;
-	}
-
-	public void setInteresting(Interesting interesting) {
-		this.interesting = interesting;
-	}	
 	
 }

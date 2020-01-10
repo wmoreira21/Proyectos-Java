@@ -35,7 +35,7 @@ public class InformationControllerTest {
 	@Mock
 	private InformatioServiceImpl informatioServiceImpl;
 	
-   @Before
+    @Before
     public void init(){
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders

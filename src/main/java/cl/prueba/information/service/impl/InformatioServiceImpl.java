@@ -8,45 +8,54 @@ import javax.xml.bind.Unmarshaller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import cl.prueba.information.controller.ErrorInfo;
 import cl.prueba.information.entity.Report;
 import cl.prueba.information.exception.InformationException;
 import cl.prueba.information.service.InformationService;
 
 @Service("weather")
-public class InformatioServiceImpl implements InformationService{
-	
+public class InformatioServiceImpl implements InformationService {
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(InformatioServiceImpl.class);
-	
+
 	@Value("${api.tiempo.url}")
 	private String url;
-	
+
 	@Value("${affiliate.id}")
 	private String id;
 
+	@Autowired
+	RestTemplate restTemplate;
+
 	@Override
-	public Report getInformation(String code) throws InformationException  {
+	public Report getInformation(String code) throws InformationException {
 		LOGGER.info("Consumo Api https://www.tiempo.com/api/#/login");
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> response
-		  = restTemplate.getForEntity(url + "api_lang=es&localidad=" + code + "&affiliate_id=" + id, String.class);
-		try
-		{
-			JAXBContext jaxbContext = JAXBContext.newInstance(Report.class);   
-		    Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-		    return (Report) jaxbUnmarshaller.unmarshal(new StringReader(response.getBody()));	
-		    
-		}
-		catch (JAXBException e) 
-		{			
-			throw new InformationException("Error Consumo Api ",e);
+
+		ResponseEntity<String> response = restTemplate
+				.getForEntity(url + "api_lang=es&localidad=" + code + "&affiliate_id=" + id, String.class);
+		
+		try {
+			if(response.getBody().contains("error")){
+				JAXBContext jaxbContext = JAXBContext.newInstance(ErrorInfo.class);
+				Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+				throw new InformationException((ErrorInfo) jaxbUnmarshaller.unmarshal(new StringReader(response.getBody())));
+			}	
+		
+			JAXBContext jaxbContext = JAXBContext.newInstance(Report.class);
+			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			return (Report) jaxbUnmarshaller.unmarshal(new StringReader(response.getBody()));
+
+		} catch (JAXBException e) {
+			throw new InformationException("Error Consumo Api ", e);
 
 		}
-		
+
 	}
 
 	public void setUrl(String url) {
@@ -56,5 +65,5 @@ public class InformatioServiceImpl implements InformationService{
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 }
